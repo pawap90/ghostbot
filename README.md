@@ -1,6 +1,8 @@
 # ghost-bot
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that A victorian child ghost that haunts your repo
+A victorian child ghost that haunts your repo
+
+> A GitHub App built with [Probot](https://github.com/probot/probot) 
 
 ## Setup
 
