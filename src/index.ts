@@ -1,15 +1,8 @@
 import { Probot } from "probot";
+import IssueHaunter from "./issue-haunter";
 
 export = (app: Probot) => {
-  app.on("issues.opened", async (context) => {
-    const issueComment = context.issue({
-      body: "Boo! 👻",
+    app.on("issues.opened", async (context) => {
+        new IssueHaunter(context).invoke();
     });
-    await context.octokit.issues.createComment(issueComment);
-  });
-  // For more information on building apps:
-  // https://probot.github.io/docs/
-
-  // To get your app running against GitHub, see:
-  // https://probot.github.io/docs/development/
 };
