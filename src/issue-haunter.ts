@@ -59,6 +59,6 @@ export default class IssueHaunter {
             per_page: MAX_ISSUE_COUNT
         });
 
-        return activeIssuesRes.data.length >= MAX_ISSUE_COUNT;
+        return activeIssuesRes.data.length == MAX_ISSUE_COUNT;
     }
 }
