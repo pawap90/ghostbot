@@ -2,6 +2,12 @@ import { Context } from "probot"
 
 const MAX_ISSUE_COUNT = process.env.MAX_ISSUE_COUNT;
 
+/**
+ * Haunts the Issue Realm.
+ * @description The IssueHaunter makes sure there's always
+ * a certain amount (MAX_ISSUE_COUNT) of unassigned 
+ * issues in the repository.
+ */
 export default class IssueHaunter {
 
     private context: Context;
@@ -20,6 +26,11 @@ export default class IssueHaunter {
         this.repo = repo;
     }
 
+    /**
+     * Creates a new issue if the maximum amount of
+     * unassigned issues is not reached.
+     * @returns the created issue
+     */
     async invoke() {
         if (await this.checkMaxActiveIssuesReached())
             return;
@@ -32,13 +43,19 @@ export default class IssueHaunter {
         });
     }
 
+    /**
+     * Checks if the maximum amount of 
+     * unassigned issues is currently reached.
+     * @returns true if the maximum amount of issues is reached
+     */
     private async checkMaxActiveIssuesReached() {
-        const activeIssuesRes = await this.octokit.issues.listForRepo({ 
-            state: "open", 
+        const activeIssuesRes = await this.octokit.issues.listForRepo({
             owner: this.owner,
             repo: this.repo,
-            sort: "created",
-            direction: "asc",
+
+            state: "open",
+            assignee: "none",
+
             per_page: MAX_ISSUE_COUNT
         });
 
