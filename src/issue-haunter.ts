@@ -1,5 +1,6 @@
 import { Context } from "probot"
-const MAX_ISSUE_COUNT = 4;
+
+const MAX_ISSUE_COUNT = process.env.MAX_ISSUE_COUNT;
 
 export default class IssueHaunter {
 
