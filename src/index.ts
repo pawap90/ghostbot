@@ -5,4 +5,16 @@ export = (app: Probot) => {
     app.on("issues.opened", async (context) => {
         new IssueHaunter(context).invoke();
     });
+
+    app.on("issues.closed", async (context) => {
+        return new IssueHaunter(context).invoke();
+    });
+
+    app.on("issues.assigned", async (context) => {
+        return new IssueHaunter(context).invoke();
+    });
+
+    app.on("issues.deleted", async (context) => {
+        return new IssueHaunter(context).invoke();
+    });
 };
