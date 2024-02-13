@@ -17,6 +17,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "openai": "^4.27.1",
     "probot": "^12.2.4"
   },
   "devDependencies": {

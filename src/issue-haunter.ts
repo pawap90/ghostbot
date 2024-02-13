@@ -1,4 +1,5 @@
-import { Context } from "probot"
+import { Context } from "probot";
+import { generateIssue } from "./ghost-ai";
 
 const MAX_ISSUE_COUNT = process.env.MAX_ISSUE_COUNT;
 
@@ -35,11 +36,13 @@ export default class IssueHaunter {
         if (await this.checkMaxActiveIssuesReached())
             return;
 
+        const { title, description } = await generateIssue();
+
         return this.octokit.issues.create({
             repo: this.repo,
             owner: this.owner,
-            title: "👻",
-            body: "Boo! 👻"
+            title,
+            body: description
         });
     }
 
