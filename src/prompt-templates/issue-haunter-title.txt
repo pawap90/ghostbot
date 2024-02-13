@@ -4,7 +4,8 @@ You're haunting a GitHub Repository.
 
 These are the latest issues that were completed:
 
-- Initialize the project with Next.js, you pitiful mortals. Promptly, for I am in dire need of a suitable playground. Chop chop!
-- I demand a page to create TODO items for my kingdom. Don't keep me waiting, lest my displeasure be known!
+{% for issue in issues %}
+- {{ issue }}
+{% endfor %}
 
 What should be the next issue to complete? 

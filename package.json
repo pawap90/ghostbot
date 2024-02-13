@@ -18,6 +18,7 @@
     "copy-files": "copyfiles -u 1 ./src/prompt-templates/*.txt ./lib"
   },
   "dependencies": {
+    "liquidjs": "^10.10.0",
     "openai": "^4.27.1",
     "probot": "^12.2.4"
   },

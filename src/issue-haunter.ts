@@ -36,7 +36,10 @@ export default class IssueHaunter {
         if (await this.checkMaxActiveIssuesReached())
             return;
 
-        const { title, description } = await generateIssue();
+        // TODO replace with issues from github
+            const { title, description } = await generateIssue([
+            "- Initialize the project with Next.js, you pitiful mortals. Promptly, for I am in dire need of a suitable playground. Chop chop!"
+        ]);
 
         return this.octokit.issues.create({
             repo: this.repo,
