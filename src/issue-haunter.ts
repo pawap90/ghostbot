@@ -2,6 +2,7 @@ import { Context } from "probot";
 import { generateIssue } from "./ghost-ai";
 
 const MAX_ISSUE_COUNT = process.env.MAX_ISSUE_COUNT;
+const LATEST_ISSUES_PAGE_SIZE = process.env.LATEST_ISSUES_PAGE_SIZE;
 
 /**
  * Haunts the Issue Realm.
@@ -36,10 +37,8 @@ export default class IssueHaunter {
         if (await this.checkMaxActiveIssuesReached())
             return;
 
-        // TODO replace with issues from github
-            const { title, description } = await generateIssue([
-            "- Initialize the project with Next.js, you pitiful mortals. Promptly, for I am in dire need of a suitable playground. Chop chop!"
-        ]);
+        const lastIssues = await this.getLatestIssues();
+        const { title, description } = await generateIssue(lastIssues);
 
         return this.octokit.issues.create({
             repo: this.repo,
@@ -66,5 +65,26 @@ export default class IssueHaunter {
         });
 
         return activeIssuesRes.data.length == MAX_ISSUE_COUNT;
+    }
+
+    /**
+     * Fetches the titles of the last issues created in the repo
+     * the amount of issues fetched is defined by LATEST_ISSUES_PAGE_SIZE.
+     * @returns the titles of the last issues
+     */
+    private async getLatestIssues() {
+        const activeIssuesRes = await this.octokit.issues.listForRepo({
+            owner: this.owner,
+            repo: this.repo,
+
+            state: "all",
+
+            sort: "created",
+            direction: "desc",
+
+            per_page: LATEST_ISSUES_PAGE_SIZE
+        });
+
+        return activeIssuesRes.data.map(issue => issue.title);
     }
 }
