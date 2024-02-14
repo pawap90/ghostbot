@@ -15,7 +15,7 @@
     "build": "tsc && npm run copy-files",
     "start": "probot run ./lib/index.js",
     "test": "jest",
-    "copy-files": "copyfiles -u 1 ./src/prompt-templates/*.txt ./lib"
+    "copy-files": "copyfiles -u 1 ./src/ai/prompt-templates/*.txt ./lib"
   },
   "dependencies": {
     "liquidjs": "^10.10.0",
