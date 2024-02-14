@@ -17,13 +17,13 @@ export async function chatCompletion(messages: ChatCompletionMessageParam[]) {
     });
 }
 
-export async function getPrompt(
+export async function getPrompt<TContext extends object>(
     templateName: string,
-    context: any
+    context?: TContext
 ) {
     const template = await getTemplate(templateName);
-    const tmpl = engine.parse(template);
 
+    const tmpl = engine.parse(template);
     return engine.render(tmpl, context);
 }
 

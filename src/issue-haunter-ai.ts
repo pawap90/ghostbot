@@ -6,6 +6,8 @@ type Issue = {
     description: string;
 }
 
+type IssueTitleContext = { issues: string[] };
+
 export async function generateIssue(lastActiveIssues: string[]): Promise<Issue> {
     const promptTitle = await getIssueTitlePrompt(lastActiveIssues);
 
@@ -39,9 +41,9 @@ export async function generateIssue(lastActiveIssues: string[]): Promise<Issue> 
 }
 
 async function getIssueTitlePrompt(lastActiveIssues: string[]) {
-    return getPrompt('issue-haunter-title', { issues: lastActiveIssues });
+    return getPrompt<IssueTitleContext>('issue-haunter-title', { issues: lastActiveIssues });
 }
 
 async function getIssueDescriptionPrompt() {
-    return getPrompt('issue-haunter-description', {});
+    return getPrompt('issue-haunter-description');
 }
