@@ -12,7 +12,7 @@ export async function generateIssue(lastActiveIssues: string[]): Promise<Issue> 
     const promptTitle = await getIssueTitlePrompt(lastActiveIssues);
 
     const messages: ChatCompletionMessageParam[] = [
-        { role: 'user', content: promptTitle }
+        { role: 'system', content: promptTitle }
     ];
 
     const titleCompletion = await chatCompletion(messages);
@@ -25,7 +25,7 @@ export async function generateIssue(lastActiveIssues: string[]): Promise<Issue> 
 
     const promptDescription = await getIssueDescriptionPrompt();
 
-    messages.push({ role: 'user', content: promptDescription });
+    messages.push({ role: 'system', content: promptDescription });
 
     const descriptionCompletion = await chatCompletion(messages);
 
