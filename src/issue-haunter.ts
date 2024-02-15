@@ -3,6 +3,7 @@ import { generateIssue } from "./ai/issue-haunter-ai";
 
 const MAX_ISSUE_COUNT = process.env.MAX_ISSUE_COUNT;
 const LATEST_ISSUES_PAGE_SIZE = process.env.LATEST_ISSUES_PAGE_SIZE;
+const BOT_NAME = process.env.BOT_NAME;
 
 /**
  * Haunts the Issue Realm.
@@ -38,6 +39,7 @@ export default class IssueHaunter {
             return;
 
         const lastIssues = await this.getLatestIssues();
+        
         const { title, description } = await generateIssue(lastIssues);
 
         return this.octokit.issues.create({
@@ -68,8 +70,8 @@ export default class IssueHaunter {
     }
 
     /**
-     * Fetches the titles of the last issues created in the repo
-     * the amount of issues fetched is defined by LATEST_ISSUES_PAGE_SIZE.
+     * Fetches the titles of the last issues created by the bot in this repo.
+     * The amount of issues fetched is defined by LATEST_ISSUES_PAGE_SIZE.
      * @returns the titles of the last issues
      */
     private async getLatestIssues() {
@@ -78,6 +80,7 @@ export default class IssueHaunter {
             repo: this.repo,
 
             state: "all",
+            creator: BOT_NAME,
 
             sort: "created",
             direction: "desc",
