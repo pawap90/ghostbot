@@ -36,7 +36,8 @@ export default class IssueRewriter {
     }
 
     private async checkMaxDailyIssuesPerUserReached() {
-        const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const aDayAgo = new Date();
+        aDayAgo.setDate(aDayAgo.getDate() - 1);
 
         const userIssuesRes = await this.octokit.issues.listForRepo({
             owner: this.owner,
@@ -44,10 +45,17 @@ export default class IssueRewriter {
 
             creator: this.context.payload.sender.login,
 
-            since: last24Hours,
+            since: aDayAgo.toISOString(),
+            state: "all",
 
             per_page: MAX_DAILY_ISSUES_PER_USER_COUNT
         });
+
+        console.log({
+            aDayAgo,
+            username: this.context.payload.sender.login,
+            issues: userIssuesRes.data.length
+        })
 
         return userIssuesRes.data.length == MAX_DAILY_ISSUES_PER_USER_COUNT;
     }
