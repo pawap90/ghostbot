@@ -1,0 +1,7 @@
+And this is the description they provided:
+
+{{ issue.description }}
+
+Rewrite it to match your style. Add anything you think is needed to make it more complete or clear.
+
+Use markdown to format the description and use breaklines to split the text into readable chunks.
