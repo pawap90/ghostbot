@@ -24,6 +24,8 @@ export default class PullRequestHaunter {
     }
 
     async invoke() {
+        this.context.log.info("PullRequestHaunter - invoking...");
+        
         const pr = this.context.payload.pull_request;
 
         const comment = await generateFirstComment({

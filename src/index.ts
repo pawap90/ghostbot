@@ -4,6 +4,8 @@ import IssueRewriter from "./issue-rewriter";
 import PullRequestHaunter from "./pullrequest-haunter";
 
 export default (app: Probot) => {
+    app.log.info("Ghost bot ready to haunt...");
+
     app.on([
         "issues.opened",
         "issues.closed",

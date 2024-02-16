@@ -22,6 +22,8 @@ export default class IssueRewriter {
     }
 
     async invoke() {
+        this.context.log.info("IssueRewriter - invoking...");
+
         if (this.context.isBot) // ignore bot generated issues.
             return;
 

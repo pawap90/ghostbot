@@ -35,6 +35,8 @@ export default class IssueHaunter {
      * @returns the created issue
      */
     async invoke() {
+        this.context.log.info("IssueHaunter - invoking...");
+
         if (await this.checkMaxActiveIssuesReached())
             return;
 
