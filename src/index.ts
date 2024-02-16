@@ -3,7 +3,7 @@ import IssueHaunter from "./issue-haunter";
 import IssueRewriter from "./issue-rewriter";
 import PullRequestHaunter from "./pullrequest-haunter";
 
-export = (app: Probot) => {
+export default (app: Probot) => {
     app.on([
         "issues.opened",
         "issues.closed",
