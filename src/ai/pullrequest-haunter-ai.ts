@@ -11,8 +11,6 @@ type PullRequestContext = { pullRequest: PullRequest };
 export async function generateFirstComment(pullRequest: PullRequest): Promise<string> {
     const commentPrompt = await getPullRequestFirstCommentPrompt(pullRequest);
 
-    console.log(commentPrompt);
-
     const messages: ChatCompletionMessageParam[] = [
         { role: 'system', content: commentPrompt }
     ];
