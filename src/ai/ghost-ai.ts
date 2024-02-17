@@ -30,6 +30,6 @@ export async function getPrompt<TContext extends object>(
 async function getTemplate(
     templateName: string
 ): Promise<string> {
-    const filename = join(__dirname, 'prompt-templates', `${templateName}.txt`);
+    const filename = join(process.cwd(), 'prompt-templates', `${templateName}.txt`);
     return readFile(filename, 'utf8');
 }
