@@ -1,7 +1,5 @@
-import { readFile } from 'fs/promises';
 import OpenAI from 'openai';
 import { ChatCompletionMessageParam } from 'openai/resources';
-import { join } from 'path';
 import { Liquid } from 'liquidjs'
 
 const engine = new Liquid();
@@ -18,18 +16,9 @@ export async function chatCompletion(messages: ChatCompletionMessageParam[]) {
 }
 
 export async function getPrompt<TContext extends object>(
-    templateName: string,
+    template: string,
     context?: TContext
 ) {
-    const template = await getTemplate(templateName);
-
     const tmpl = engine.parse(template);
     return engine.render(tmpl, context);
-}
-
-async function getTemplate(
-    templateName: string
-): Promise<string> {
-    const filename = join(process.cwd(), 'prompt-templates', `${templateName}.json`);
-    return readFile(filename, 'utf8');
 }

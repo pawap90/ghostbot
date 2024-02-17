@@ -1,5 +1,6 @@
 import { ChatCompletionMessageParam } from 'openai/resources';
 import { chatCompletion, getPrompt } from './ghost-ai';
+import { titleTemplate, descriptionTemplate } from './prompt-templates/issue-haunter';
 
 type Issue = {
     title: string;
@@ -41,9 +42,9 @@ export async function generateIssue(lastActiveIssues: string[]): Promise<Issue> 
 }
 
 async function getIssueTitlePrompt(lastActiveIssues: string[]) {
-    return getPrompt<IssueTitleContext>('issue-haunter-title', { issues: lastActiveIssues });
+    return getPrompt<IssueTitleContext>(titleTemplate, { issues: lastActiveIssues });
 }
 
 async function getIssueDescriptionPrompt() {
-    return getPrompt('issue-haunter-description');
+    return getPrompt(descriptionTemplate);
 }

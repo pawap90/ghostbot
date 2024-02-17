@@ -1,5 +1,6 @@
 import { ChatCompletionMessageParam } from 'openai/resources';
 import { chatCompletion, getPrompt } from './ghost-ai';
+import { titleTemplate, descriptionTemplate } from './prompt-templates/issue-rewriter';
 
 type Issue = {
     title: string;
@@ -41,9 +42,9 @@ export async function rewriteIssue(issue: Issue): Promise<Issue> {
 }
 
 async function getIssueTitlePrompt(issue: Issue) {
-    return getPrompt<IssueRewriteContext>('issue-rewrite-title', { issue: issue });
+    return getPrompt<IssueRewriteContext>(titleTemplate, { issue: issue });
 }
 
 async function getIssueDescriptionPrompt(issue: Issue) {
-    return getPrompt<IssueRewriteContext>('issue-rewrite-description', { issue: issue });
+    return getPrompt<IssueRewriteContext>(descriptionTemplate, { issue: issue });
 }

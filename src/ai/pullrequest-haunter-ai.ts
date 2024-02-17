@@ -1,5 +1,6 @@
 import { ChatCompletionMessageParam } from 'openai/resources';
 import { chatCompletion, getPrompt } from './ghost-ai';
+import { commentTemplate } from './prompt-templates/pullrequest-first-comment';
 
 type PullRequest = {
     title: string;
@@ -25,5 +26,5 @@ export async function generateFirstComment(pullRequest: PullRequest): Promise<st
 }
 
 async function getPullRequestFirstCommentPrompt(pullRequest: PullRequest) {
-    return getPrompt<PullRequestContext>('pullrequest-first-comment', { pullRequest: pullRequest });
+    return getPrompt<PullRequestContext>(commentTemplate, { pullRequest: pullRequest });
 }
