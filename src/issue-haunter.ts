@@ -35,21 +35,27 @@ export default class IssueHaunter {
      * @returns the created issue
      */
     async invoke() {
-        this.context.log.info("IssueHaunter - invoking...");
+        try {
 
-        if (await this.checkMaxActiveIssuesReached())
-            return;
+            this.context.log.info("IssueHaunter - invoking...");
 
-        const lastIssues = await this.getLatestIssues();
-        
-        const { title, description } = await generateIssue(lastIssues);
+            if (await this.checkMaxActiveIssuesReached())
+                return;
 
-        return this.octokit.issues.create({
-            repo: this.repo,
-            owner: this.owner,
-            title,
-            body: description
-        });
+            const lastIssues = await this.getLatestIssues();
+
+            const { title, description } = await generateIssue(lastIssues);
+
+            return this.octokit.issues.create({
+                repo: this.repo,
+                owner: this.owner,
+                title,
+                body: description
+            });
+        } catch (err) {
+            this.context.log.error("IssueHaunter - error", err);
+            throw new Error("There was an error while haunting the issue realm." + err);
+        }
     }
 
     /**
