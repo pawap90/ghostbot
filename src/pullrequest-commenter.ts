@@ -1,11 +1,11 @@
-import { Context } from "probot";
-import { generateFirstComment } from "./ai/pullrequest-haunter-ai";
+import { Context } from 'probot';
+import { generateFirstComment } from './ai/pullrequest-commenter-ai';
 
 /**
  * Haunts the PR Realm.
- * @description The PullRequestHaunter always leaves a comment in new PRs.
+ * @description The PullRequestCommenter leaves a comment in new PRs.
  */
-export default class PullRequestHaunter {
+export default class PullRequestCommenter {
 
     private context: Context<"pull_request.opened">;
     private get octokit() {
@@ -24,7 +24,7 @@ export default class PullRequestHaunter {
     }
 
     async invoke() {
-        this.context.log.info("PullRequestHaunter - invoking...");
+        this.context.log.info("PullRequestCommenter - invoking...");
         
         const pr = this.context.payload.pull_request;
 

@@ -1,7 +1,7 @@
 import { Probot } from "probot";
 import IssueCreator from "./issue-creator";
 import IssueRewriter from "./issue-rewriter";
-import PullRequestHaunter from "./pullrequest-haunter";
+import PullRequestCommenter from "./pullrequest-commenter";
 
 export default (app: Probot) => {
     app.log.info("Ghost bot ready to haunt...");
@@ -16,5 +16,5 @@ export default (app: Probot) => {
 
     app.on("issues.opened", async (context) => new IssueRewriter(context).invoke());
 
-    app.on("pull_request.opened", async (context) => new PullRequestHaunter(context).invoke());
+    app.on("pull_request.opened", async (context) => new PullRequestCommenter(context).invoke());
 };

@@ -1,6 +1,6 @@
 import { ChatCompletionMessageParam } from 'openai/resources';
 import { chatCompletion, getPrompt } from './ghost-ai';
-import { commentTemplate } from './prompt-templates/pullrequest-first-comment';
+import { commentTemplate } from './prompt-templates/pullrequest-commenter';
 
 type PullRequest = {
     title: string;
