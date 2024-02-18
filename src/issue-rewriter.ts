@@ -86,7 +86,7 @@ export default class IssueRewriter {
             owner: this.owner,
             issue_number: this.context.payload.issue.number,
             state: "closed",
-            label: "invalid"
+            labels: ["invalid"]
         });
     }
 
@@ -99,7 +99,7 @@ export default class IssueRewriter {
             owner: this.owner,
             title,
             body: description,
-            labels: ["haunted"]
+            labels: ["banished"]
         });
     }
 }
