@@ -1,5 +1,6 @@
 import { Context } from "probot";
 import { rewriteIssue } from "./ai/issue-rewriter-ai";
+import { checkMaxDailyIssuesPerUserReached } from "./utils/user-activity";
 
 const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_COUNT;
 
@@ -27,7 +28,7 @@ export default class IssueRewriter {
         if (this.context.isBot) // ignore bot generated issues.
             return;
 
-        if (await this.checkMaxDailyIssuesPerUserReached())
+        if (await checkMaxDailyIssuesPerUserReached(this.octokit, this.owner, this.repo, this.context.payload.issue.user.login))
             await this.createGhostUnavailableComment();
         else {
             const issueCreatedRes = await this.rewriteIssue();
@@ -37,37 +38,12 @@ export default class IssueRewriter {
         return this.closeIssue();
     }
 
-    private async checkMaxDailyIssuesPerUserReached() {
-        const aDayAgo = new Date();
-        aDayAgo.setDate(aDayAgo.getDate() - 1);
-
-        const userIssuesRes = await this.octokit.issues.listForRepo({
-            owner: this.owner,
-            repo: this.repo,
-
-            creator: this.context.payload.sender.login,
-
-            since: aDayAgo.toISOString(),
-            state: "all",
-
-            per_page: MAX_DAILY_ISSUES_PER_USER_COUNT
-        });
-
-        console.log({
-            aDayAgo,
-            username: this.context.payload.sender.login,
-            issues: userIssuesRes.data.length
-        })
-
-        return userIssuesRes.data.length == MAX_DAILY_ISSUES_PER_USER_COUNT;
-    }
-
     private async createGhostUnavailableComment() {
         return this.octokit.issues.createComment({
             repo: this.repo,
             owner: this.owner,
             issue_number: this.context.payload.issue.number,
-            body: `His ghostliness is currently unavailable to review your comments. Please try again tomorrow. He can only review ${MAX_DAILY_ISSUES_PER_USER_COUNT} issues per user per day, lest he becomes overwhelmed.`
+            body: `His ghostliness is currently unavailable to review your issues. Please try again tomorrow. He can only review ${MAX_DAILY_ISSUES_PER_USER_COUNT} issues/PRs per user per day, lest he becomes overwhelmed.`
         });
     }
 
@@ -86,7 +62,7 @@ export default class IssueRewriter {
             owner: this.owner,
             issue_number: this.context.payload.issue.number,
             state: "closed",
-            labels: ["invalid"]
+            labels: ["ghost-unavailable"]
         });
     }
 
