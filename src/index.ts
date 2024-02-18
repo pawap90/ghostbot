@@ -1,5 +1,5 @@
 import { Probot } from "probot";
-import IssueHaunter from "./issue-haunter";
+import IssueCreator from "./issue-creator";
 import IssueRewriter from "./issue-rewriter";
 import PullRequestHaunter from "./pullrequest-haunter";
 
@@ -12,7 +12,7 @@ export default (app: Probot) => {
         "issues.assigned",
         "issues.deleted"
     ],
-        async (context) => new IssueHaunter(context).invoke());
+        async (context) => new IssueCreator(context).invoke());
 
     app.on("issues.opened", async (context) => new IssueRewriter(context).invoke());
 

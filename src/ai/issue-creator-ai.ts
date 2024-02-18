@@ -1,6 +1,6 @@
 import { ChatCompletionMessageParam } from 'openai/resources';
 import { chatCompletion, getPrompt } from './ghost-ai';
-import { titleTemplate, descriptionTemplate } from './prompt-templates/issue-haunter';
+import { titleTemplate, descriptionTemplate } from './prompt-templates/issue-creator';
 
 type Issue = {
     title: string;

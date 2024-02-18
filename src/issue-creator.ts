@@ -1,5 +1,5 @@
 import { Context } from "probot";
-import { generateIssue } from "./ai/issue-haunter-ai";
+import { generateIssue } from "./ai/issue-creator-ai";
 
 const MAX_ISSUE_COUNT = parseInt(process.env.MAX_ISSUE_COUNT);
 const LATEST_ISSUES_PAGE_SIZE = process.env.LATEST_ISSUES_PAGE_SIZE;
@@ -7,11 +7,11 @@ const BOT_NAME = process.env.BOT_NAME;
 
 /**
  * Haunts the Issue Realm.
- * @description The IssueHaunter makes sure there's always
+ * @description The IssueCreator makes sure there's always
  * a certain amount (MAX_ISSUE_COUNT) of unassigned 
  * issues in the repository.
  */
-export default class IssueHaunter {
+export default class IssueCreator {
 
     private context: Context;
     private get octokit() {
@@ -35,7 +35,7 @@ export default class IssueHaunter {
      * @returns the created issue
      */
     async invoke() {
-        this.context.log.info("IssueHaunter - invoking...");
+        this.context.log.info("IssueCreator - invoking...");
 
         if (await this.checkMaxActiveIssuesReached()) 
             return;
