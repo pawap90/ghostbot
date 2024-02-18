@@ -37,7 +37,7 @@ export default class IssueHaunter {
     async invoke() {
         this.context.log.info("IssueHaunter - invoking...");
 
-        if (await this.checkMaxActiveIssuesReached())
+        if (await this.checkMaxActiveIssuesReached()) 
             return;
 
         const lastIssues = await this.getLatestIssues();
@@ -48,7 +48,8 @@ export default class IssueHaunter {
             repo: this.repo,
             owner: this.owner,
             title,
-            body: description
+            body: description,
+            labels: ["haunted"]
         });
     }
 
@@ -64,6 +65,7 @@ export default class IssueHaunter {
 
             state: "open",
             assignee: "none",
+            labels: "haunted",
 
             per_page: MAX_ISSUE_COUNT
         });
@@ -83,6 +85,7 @@ export default class IssueHaunter {
 
             state: "all",
             creator: BOT_NAME,
+            labels: "haunted",
 
             sort: "created",
             direction: "desc",

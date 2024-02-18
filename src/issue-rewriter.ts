@@ -98,7 +98,8 @@ export default class IssueRewriter {
             repo: this.repo,
             owner: this.owner,
             title,
-            body: description
+            body: description,
+            labels: ["haunted"]
         });
     }
 }
