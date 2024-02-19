@@ -5,6 +5,10 @@ import { ProbotOctokit } from "./utils/types";
 
 const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_COUNT;
 
+/**
+ * Haunts user-created issues.
+ * @description The IssueRewriter will rewrite any issues created by users to match the ghost's style, as long as the user hasn't exceeded the maximum daily issues per user count.
+ */
 export default class IssueRewriter {
     private context: Context<"issues.opened">;
     
