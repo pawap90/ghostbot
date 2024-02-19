@@ -1,6 +1,6 @@
 import { Context } from 'probot';
 import { generateFirstComment } from './ai/pullrequest-commenter-ai';
-import { checkMaxDailyIssuesPerUserReached } from './utils/user-activity';
+import { checkMaxDailyIssuesPerUserExceeded } from './utils/user-activity';
 
 const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_COUNT;
 
@@ -31,7 +31,7 @@ export default class PullRequestCommenter {
         
         const pr = this.context.payload.pull_request;
 
-        if (await checkMaxDailyIssuesPerUserReached(this.octokit, this.owner, this.repo, pr.user.login)) {
+        if (await checkMaxDailyIssuesPerUserExceeded(this.octokit, this.owner, this.repo, pr.user.login)) {
             await this.createGhostUnavailableComment();
             await this.closeIssue();
             return;

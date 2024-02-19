@@ -1,6 +1,6 @@
 import { Context } from "probot";
 import { rewriteIssue } from "./ai/issue-rewriter-ai";
-import { checkMaxDailyIssuesPerUserReached } from "./utils/user-activity";
+import { checkMaxDailyIssuesPerUserExceeded } from "./utils/user-activity";
 
 const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_COUNT;
 
@@ -28,7 +28,7 @@ export default class IssueRewriter {
         if (this.context.isBot) // ignore bot generated issues.
             return;
 
-        if (await checkMaxDailyIssuesPerUserReached(this.octokit, this.owner, this.repo, this.context.payload.issue.user.login))
+        if (await checkMaxDailyIssuesPerUserExceeded(this.octokit, this.owner, this.repo, this.context.payload.issue.user.login))
             await this.createGhostUnavailableComment();
         else {
             const issueCreatedRes = await this.rewriteIssue();
