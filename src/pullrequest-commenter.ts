@@ -1,6 +1,7 @@
 import { Context } from 'probot';
 import { generateFirstComment } from './ai/pullrequest-commenter-ai';
 import { checkMaxDailyIssuesPerUserExceeded } from './utils/user-activity';
+import { ProbotOctokit } from './utils/types';
 
 const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_COUNT;
 
@@ -9,18 +10,16 @@ const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_CO
  * @description The PullRequestCommenter leaves a comment in new PRs.
  */
 export default class PullRequestCommenter {
-
     private context: Context<"pull_request.opened">;
-    private get octokit() {
-        return this.context.octokit;
-    }
-
-    private owner: string;
-    private repo: string;
+    
+    private readonly octokit: ProbotOctokit;
+    private readonly owner: string;
+    private readonly repo: string;
 
     constructor(context: Context<"pull_request.opened">) {
         this.context = context;
 
+        this.octokit = context.octokit;
         const { owner, repo } = context.repo();
         this.owner = owner;
         this.repo = repo;

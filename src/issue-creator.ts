@@ -1,5 +1,6 @@
 import { Context } from "probot";
 import { generateIssue } from "./ai/issue-creator-ai";
+import { ProbotOctokit } from "./utils/types";
 
 const MAX_ISSUE_COUNT = parseInt(process.env.MAX_ISSUE_COUNT);
 const LATEST_ISSUES_PAGE_SIZE = parseInt(process.env.LATEST_ISSUES_PAGE_SIZE);
@@ -12,18 +13,16 @@ const BOT_NAME = process.env.BOT_NAME;
  * issues in the repository.
  */
 export default class IssueCreator {
-
     private context: Context;
-    private get octokit() {
-        return this.context.octokit;
-    }
-
-    private owner: string;
-    private repo: string;
+    
+    private readonly octokit: ProbotOctokit;
+    private readonly owner: string;
+    private readonly repo: string;
 
     constructor(context: Context) {
         this.context = context;
 
+        this.octokit = context.octokit;
         const { owner, repo } = context.repo();
         this.owner = owner;
         this.repo = repo;

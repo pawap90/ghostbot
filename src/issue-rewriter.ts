@@ -1,22 +1,21 @@
 import { Context } from "probot";
 import { rewriteIssue } from "./ai/issue-rewriter-ai";
 import { checkMaxDailyIssuesPerUserExceeded } from "./utils/user-activity";
+import { ProbotOctokit } from "./utils/types";
 
 const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_COUNT;
 
 export default class IssueRewriter {
-
     private context: Context<"issues.opened">;
-    private get octokit() {
-        return this.context.octokit;
-    }
-
-    private owner: string;
-    private repo: string;
+    
+    private readonly octokit: ProbotOctokit;
+    private readonly owner: string;
+    private readonly repo: string;
 
     constructor(context: Context<"issues.opened">) {
         this.context = context;
 
+        this.octokit = context.octokit;
         const { owner, repo } = context.repo();
         this.owner = owner;
         this.repo = repo;
