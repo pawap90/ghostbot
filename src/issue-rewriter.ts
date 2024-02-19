@@ -28,14 +28,15 @@ export default class IssueRewriter {
         if (this.context.isBot) // ignore bot generated issues.
             return;
 
-        if (await checkMaxDailyIssuesPerUserExceeded(this.octokit, this.owner, this.repo, this.context.payload.issue.user.login))
+        if (await checkMaxDailyIssuesPerUserExceeded(this.octokit, this.owner, this.repo, this.context.payload.issue.user.login)) {
             await this.createGhostUnavailableComment();
+            return this.closeIssue('ghost-unavailable');
+        }
         else {
             const issueCreatedRes = await this.rewriteIssue();
             await this.createIssueRewritedComment(issueCreatedRes.data.number);
+            return this.closeIssue('banished');
         }
-
-        return this.closeIssue();
     }
 
     private async createGhostUnavailableComment() {
@@ -56,13 +57,13 @@ export default class IssueRewriter {
         });
     }
 
-    private async closeIssue() {
+    private async closeIssue(label: string) {
         return this.octokit.issues.update({
             repo: this.repo,
             owner: this.owner,
             issue_number: this.context.payload.issue.number,
             state: "closed",
-            labels: ["ghost-unavailable"]
+            labels: [label]
         });
     }
 
@@ -75,7 +76,7 @@ export default class IssueRewriter {
             owner: this.owner,
             title,
             body: description,
-            labels: ["banished"]
+            labels: ["haunted"]
         });
     }
 }
