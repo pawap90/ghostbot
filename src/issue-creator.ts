@@ -2,7 +2,7 @@ import { Context } from "probot";
 import { generateIssue } from "./ai/issue-creator-ai";
 
 const MAX_ISSUE_COUNT = parseInt(process.env.MAX_ISSUE_COUNT);
-const LATEST_ISSUES_PAGE_SIZE = process.env.LATEST_ISSUES_PAGE_SIZE;
+const LATEST_ISSUES_PAGE_SIZE = parseInt(process.env.LATEST_ISSUES_PAGE_SIZE);
 const BOT_NAME = process.env.BOT_NAME;
 
 /**
