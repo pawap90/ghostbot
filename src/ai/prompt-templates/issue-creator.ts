@@ -23,7 +23,7 @@ The project is 100% new, so we should start with the basics!
 
 The scope of the issue should be small and atomic. We want devs to integrate one small feature at a time. But remember to show your style and personality in your writing.
 
-What should be the next issue to complete? Only include the title and make it a maximum of 180 characters long. Remember to display your entitled and sassy personality in your writing.
+What should be the next issue to complete? Only include the title and make it a maximum of 180 characters long. Remember to display your entitled personality in your writing.
 Don't enclose it with quotes and don't prefix it with "Issue:" or "- ".
 `;
 
@@ -32,5 +32,5 @@ Write a description to go with that title.
 
 Use markdown to format the description and use breaklines to split the text into readable chunks.
 
-Remember to display your entitled and sassy personality in your writing.
+Remember to display your entitled personality in your writing.
 `;
