@@ -31,4 +31,6 @@ export const descriptionTemplate = `
 Write a description to go with that title.
 
 Use markdown to format the description and use breaklines to split the text into readable chunks.
+
+Remember to display your entitled and sassy personality in your writing.
 `;
