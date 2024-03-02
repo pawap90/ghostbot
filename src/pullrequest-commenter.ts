@@ -2,8 +2,9 @@ import { Context } from 'probot';
 import { generateFirstComment } from './ai/pullrequest-commenter-ai';
 import { checkMaxDailyIssuesPerUserExceeded } from './utils/user-activity';
 import { ProbotOctokit } from './utils/types';
+import env from './utils/env';
 
-const MAX_DAILY_ISSUES_PER_USER_COUNT = process.env.MAX_DAILY_ISSUES_PER_USER_COUNT;
+const MAX_DAILY_ISSUES_PER_USER_COUNT: string = env.MAX_DAILY_ISSUES_PER_USER_COUNT;
 
 /**
  * Haunts the PR Realm.

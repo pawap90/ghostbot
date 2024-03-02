@@ -1,10 +1,11 @@
 import { Context } from "probot";
 import { generateIssue } from "./ai/issue-creator-ai";
 import { ProbotOctokit } from "./utils/types";
+import env from "./utils/env";
 
-const MAX_ISSUE_COUNT = parseInt(process.env.MAX_ISSUE_COUNT);
-const LATEST_ISSUES_PAGE_SIZE = parseInt(process.env.LATEST_ISSUES_PAGE_SIZE);
-const BOT_NAME = process.env.BOT_NAME;
+const MAX_ISSUE_COUNT: number = parseInt(env.MAX_ISSUE_COUNT);
+const LATEST_ISSUES_PAGE_SIZE: number = parseInt(env.LATEST_ISSUES_PAGE_SIZE);
+const BOT_NAME: string = env.BOT_NAME;
 
 /**
  * Haunts the Issue Realm.

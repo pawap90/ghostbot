@@ -1,6 +1,7 @@
+import env  from './env';
 import { ProbotOctokit } from './types';
 
-const MAX_DAILY_ISSUES_PER_USER_COUNT = parseInt(process.env.MAX_DAILY_ISSUES_PER_USER_COUNT);
+const MAX_DAILY_ISSUES_PER_USER_COUNT: number = parseInt(env.MAX_DAILY_ISSUES_PER_USER_COUNT);
 
 /**
  * Checks if the user has exceeded the maximum daily issues/PRs per user count.
