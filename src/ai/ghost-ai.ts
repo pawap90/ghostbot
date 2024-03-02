@@ -11,7 +11,9 @@ const openai = new OpenAI({
 export async function chatCompletion(messages: ChatCompletionMessageParam[]) {
     return openai.chat.completions.create({
         messages,
-        model: 'gpt-3.5-turbo-0125',
+        model: 'gpt-3.5-turbo-1106',
+        temperature: 0.7,
+        top_p: 0.8
     });
 }
 
